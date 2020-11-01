@@ -28,7 +28,7 @@ RUN rm -rf /we.dog
 #ADD index.html /var/lib/nginx/html/index.html
 
 
-ADD configure.sh /configure.sh
-RUN chmod +x /configure.sh
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 EXPOSE 80
-ENTRYPOINT ["/configure.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
