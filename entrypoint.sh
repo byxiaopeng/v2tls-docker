@@ -1,7 +1,6 @@
 #!/bin/sh
 #显示时间
 date
-
 cat << EOF > /usr/local/etc/v2ray/config.json
 {
   "inbounds": [
