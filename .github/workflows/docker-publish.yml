@@ -1,0 +1,26 @@
+name: pushdocker
+on:
+  schedule:
+    - cron: 35 21 * * 4
+  watch:
+    types: started
+jobs:
+  build:
+    runs-on: Ubuntu-20.04  
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install build dependencies
+      run: |
+        df -h
+    - name: login docker
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        #启用 buildx 插件
+        export DOCKER_CLI_EXPERIMENTAL=enabled
+        docker run --privileged --rm docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64
+        docker buildx create --use --name mybuilder
+        docker buildx inspect mybuilder --bootstrap
+        docker buildx ls
+    - name: docker elecv2pjd
+      run: |
+        docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/v2tls-docker --platform=linux/amd64 . --push
