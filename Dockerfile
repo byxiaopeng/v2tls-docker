@@ -1,5 +1,7 @@
-FROM alpine:latest
-RUN apk add --no-cache --virtual .build-deps ca-certificates nginx curl wget unzip git
+FROM alpine
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+RUN apk update && apk upgrade
+RUN apk add --no-cache --virtual .build-deps ca-certificates nginx curl wget unzip
 
 #同步系统时间
 RUN apk add tzdata
